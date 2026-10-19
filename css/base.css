@@ -22,6 +22,7 @@
   /*-------- フォントサイズ ----------*/
 
 
+  --font-size-fv: clamp(7rem, 8vw, 18rem);
   --font-size-heading-l: clamp(3.6rem, 5vw, 6.4rem);
   --font-size-heading-m: clamp(2.4rem, 3vw, 3.2rem);
   --font-size-heading-s: clamp(2rem, 2vw, 2.4rem);
@@ -73,11 +74,11 @@ body {
 
 /* ----------- hoverできる端末のみの設定 --------------- */
 
-@media (hover: hover) {
+/* @media (hover: hover) {
   a:hover {
     opacity: 0.7;
   }
-}
+} */
 
 /* -------------- コピーライト --------------- */
 footer small {
@@ -113,7 +114,12 @@ footer small {
 .heading-sub {
   font-size: var(--font-size-heading-sub);
   font-weight: 400;
-  color: var(--color-accent);
+  color: var(--color-main);
+}
+
+
+h1,h2,h3,h4,h5,h6,p,a {
+  text-transform: uppercase;
 }
 
 
@@ -125,8 +131,10 @@ footer small {
 
 
 .button {
+  position: relative;
+  display: block;
+  width: 100%;
   font-weight: 700;
-  display: inline-block;
   color: var(--color-text);
   border-bottom: 1px solid var(--color-text);
   padding: 0.5rem 1rem;
@@ -149,9 +157,10 @@ footer small {
 
 .button::after {
   content: "→";
+  position: absolute;
+  right: 16px;
   font-size: 2rem;
   display: inline-block;
-  padding-left: 2rem;
   transition: transform var(--transition-base);
 }
 
@@ -162,5 +171,166 @@ footer small {
   }
   .button:hover::after {
     transform: translateX(8px);
+  }
+}
+
+/* ----------- 共通アニメーション ----------- */
+/* class="js-scroll-animとアニメーションしたい内容クラスを該当HTMLに付ける */
+/* ---------- 共通設定 ---------- */
+
+.js-scroll-anim {
+  --anim-duration: 1.5s;
+  --anim-delay: 0s;
+  --anim-distance: 40px;
+  --anim-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* ========================================
+   Fade Up
+   下から上へ + フェード
+======================================== */
+
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(var(--anim-distance));
+
+  transition:
+    opacity var(--anim-duration) var(--anim-ease) var(--anim-delay),
+    transform var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-fade-up.is-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ========================================
+   Fade In
+   その場でフェード
+======================================== */
+
+.anim-fade-in {
+  opacity: 0;
+
+  transition:
+    opacity var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-fade-in.is-animated {
+  opacity: 1;
+}
+
+
+/* ========================================
+   Line
+   左から右へラインを伸ばす
+======================================== */
+
+.anim-line {
+  position: relative;
+}
+
+.anim-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 0.5px;
+
+  background: var(--color-main);
+
+  transform: scaleX(0);
+  transform-origin: left;
+
+  transition:
+    transform var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-line.is-animated::after {
+  transform: scaleX(1);
+}
+
+
+/* ========================================
+   Slide Left
+   右から左へ
+======================================== */
+
+.anim-slide-left {
+  opacity: 0;
+
+  transform:
+    translateX(var(--anim-distance));
+
+  transition:
+    opacity var(--anim-duration) var(--anim-ease) var(--anim-delay),
+    transform var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-slide-left.is-animated {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* ========================================
+   Slide Right
+   左から右へ
+======================================== */
+
+.anim-slide-right {
+  opacity: 0;
+
+  transform:
+    translateX(calc(var(--anim-distance) * -1));
+
+  transition:
+    opacity var(--anim-duration) var(--anim-ease) var(--anim-delay),
+    transform var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-slide-right.is-animated {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* ========================================
+   Image Reveal
+   左から右へ画像を表示
+======================================== */
+
+.anim-image-reveal {
+  clip-path: inset(0 100% 0 0);
+
+  transition:
+    clip-path var(--anim-duration) var(--anim-ease) var(--anim-delay);
+}
+
+.anim-image-reveal.is-animated {
+  clip-path: inset(0);
+}
+
+
+/* ========================================
+   Reduced Motion
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .js-scroll-anim {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+    transition: none;
+  }
+
+  .anim-line::after {
+    transform: scaleX(1);
+    transition: none;
   }
 }
