@@ -34,7 +34,7 @@ header.is-scrolling {
     align-items: center;
 }
 
-h1 {
+ .header-logo {
     width: 300px;
     height: 100px;
     padding: 1rem 2rem;
@@ -537,7 +537,7 @@ footer {
     padding: 0 16px;
   }
 
-  h1 {
+  .header-logo {
     width: 180px;
     height: auto;
     padding: 0;
@@ -754,9 +754,9 @@ footer {
 /* ---------- SPサイズ（480px以下） ---------- */
 @media (max-width: 768px) {
 
-    body {
-        padding-left: 16px;
-        padding-right: 16px;
+    main {
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     /* --------- top-work --------- */

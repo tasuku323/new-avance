@@ -38,3 +38,27 @@ hamburger.addEventListener("click", () => {
 
   document.body.classList.toggle("is-menu-open", isOpen);
 });
+
+const header = document.querySelector("header");
+
+let scrollTimer;
+
+window.addEventListener("scroll", () => {
+
+  clearTimeout(scrollTimer);
+
+  if (
+    window.scrollY <= 20 ||
+    document.body.classList.contains("is-menu-open")
+  ) {
+    header.classList.remove("is-scrolling");
+    return;
+  }
+
+  header.classList.add("is-scrolling");
+
+  scrollTimer = setTimeout(() => {
+    header.classList.remove("is-scrolling");
+  }, 180);
+
+}, { passive: true });
