@@ -532,6 +532,10 @@ footer {
 
 @media (max-width: 768px) {
 
+    section {
+        margin-top: 120px;
+    }
+
    .header-inner {
     width: 100%;
     padding: 0 16px;
@@ -752,7 +756,7 @@ footer {
 /* ----- TOPタブレットここまで ------ */
 
 /* ---------- SPサイズ（480px以下） ---------- */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
 
     main {
         padding-left: 8px;
