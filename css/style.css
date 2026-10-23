@@ -27,42 +27,75 @@ header.is-scrolling {
 }
 
 .header-inner {
-    max-width: 1440px;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 }
 
  .header-logo {
-    width: 300px;
-    height: 100px;
-    padding: 1rem 2rem;
-    background-color: blue;
+     width: 350px;
+     height: 100px;
+     padding: 1rem 2rem;
+    }
+
+.header-logo a {
+    color: var(--color-main2);
+    align-self: center;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.header-logo a img {
+    height: 80%;
 }
 
 .global-nav {
-    width: calc(100% - 340px);
+    align-self: stretch;
+    width: calc(100% - 390px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .global-nav ul {
     width: 100%;
     display: flex;
     justify-content: end;
+    align-items: center;
     gap: 1.5rem;
+    height: 100%;
 }
 
 .global-nav ul li {
     width: 100%;
+    height: 100%;
 }
 
 .global-nav ul li a {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     color: var(--color-black);
     font-weight: 700;
-    font-size: 1.7rem;
+    font-size: 1.9rem;
     position: relative;
+    z-index: 0;
+    height: 100%;
+}
+
+.global-nav ul li:last-child a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-main);
+    z-index: -1;
 }
 
 @media (hover: hover) {
@@ -76,13 +109,14 @@ header.is-scrolling {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -4px;
+    bottom: 0;
     width: 100%;
-    height: 1px;
+    height: 12px;
     background: var(--color-accent);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.5s ease;
+    z-index: -1;
 }
 
 .global-nav ul li a.is-current::after {
@@ -92,30 +126,154 @@ header.is-scrolling {
 
 
 /* ------- FV -------- */
+/* FV本体 */
 .first-view {
+    position: relative;
     width: 100%;
     height: 100vh;
+    height: 100svh;
     display: flex;
     flex-direction: column;
-    justify-content: end;
-    background-image: url(../images/S__37765128.jpg);
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
+    justify-content: flex-end;
     overflow: hidden;
+    background-color: var(--color-base);
 }
 
 .first-view .maincopy {
     font-size: var(--font-size-fv);
     line-height: 0.9;
-    font-weight: 400;
+    font-weight: 900;
     padding: 2rem 1.6rem;
+    color: var(--color-main);
+    text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .first-view .subcopy {
-    font-size: var(--font-size-heading-s);
+    font-size: var(--font-size-heading-m);
     padding: 2rem 1.6rem;
+
 }
+
+/* スライダー全体 */
+.fv-slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+/* 各スライド */
+.fv-slide {
+    position: absolute;
+    inset: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: scale(1);
+    transition:
+        opacity 1.6s ease-in-out,
+        transform 8s linear;
+    will-change: opacity, transform;
+}
+/* 表示中のスライド */
+.fv-slide.is-active {
+    opacity: 1;
+    transform: scale(1.08);
+}
+/* テキストの視認性確保 */
+.first-view::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0.15) 65%,
+        rgba(0, 0, 0, 0.05) 100%
+    );
+
+    z-index: 1;
+    pointer-events: none;
+}
+/* 固定テキスト */
+.fv-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* ========================================
+   PAGINATION
+======================================== */
+
+.fv-pagination {
+    position: absolute;
+    right: 4%;
+    bottom: 32px;
+    z-index: 3;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* インジケーター */
+
+.fv-dot {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.fv-dot::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: background 0.4s ease;
+}
+
+/* アクティブ */
+.fv-dot.is-active::before {
+    background: var(--color-accent);
+}
+
+.fv-dot:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    .fv-pagination {
+        top: 100px;
+        right: 16px;
+        bottom: auto;
+    }
+
+    .fv-slide {
+        background-position: center;
+    }
+
+}
+
+/* 動きを減らす設定への対応 */
+@media (prefers-reduced-motion: reduce) {
+
+    .fv-slide {
+        transition: none;
+        transform: none !important;
+    }
+}
+
+
 
 
 /* ----------- section共通 ----------- */
@@ -137,6 +295,10 @@ section {
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 24px;
+}
+
+h2 {
+        text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 
@@ -493,12 +655,22 @@ footer {
 }
 
 .footer-description {
+    max-width: 800px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
 
+.footer-description a {
+    color: var(--color-white);
+}
+
 .footer-text {
     text-align: center;
+}
+
+.footer-text img {
+    max-width: 400px;
 }
 
 .sns {
@@ -508,8 +680,10 @@ footer {
 }
 
 .sns a {
+    justify-self: center;
+    aspect-ratio: 1 / 1;
+    width: 100px;
     display: block;
-    border: 2px solid var(--color-main);
     align-self: end;
 }
 
@@ -542,10 +716,10 @@ footer {
   }
 
   .header-logo {
-    width: 180px;
-    height: auto;
     padding: 0;
     background: transparent;
+    position: relative;
+    z-index: 1003;
   }
 
 

@@ -62,3 +62,97 @@ window.addEventListener("scroll", () => {
   }, 180);
 
 }, { passive: true });
+
+/* FV SLIDER */
+(() => {
+
+    const fv = document.querySelector(".first-view");
+
+    if (!fv) return;
+
+    const slides = fv.querySelectorAll(".fv-slide");
+    const dots = fv.querySelectorAll(".fv-dot");
+
+    /* ---------- 設定 ---------- */
+
+    const INTERVAL = 6500; // 画像切り替え間隔
+
+    let current = 0;
+    let timer = null;
+
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+    );
+
+    /* ---------- スライド切り替え ---------- */
+
+    function showSlide(index) {
+
+        if (index === current) return;
+
+        slides[current].classList.remove("is-active");
+        dots[current]?.classList.remove("is-active");
+        dots[current]?.setAttribute("aria-pressed", "false");
+
+        slides[index].classList.add("is-active");
+        dots[index]?.classList.add("is-active");
+        dots[index]?.setAttribute("aria-pressed", "true");
+
+        current = index;
+    }
+
+    /* ---------- 次のスライド ---------- */
+
+    function nextSlide() {
+
+        const next = (current + 1) % slides.length;
+
+        showSlide(next);
+    }
+
+    /* ---------- 自動再生 ---------- */
+
+    function startSlider() {
+
+        if (
+            slides.length <= 1 ||
+            reduceMotion.matches ||
+            document.hidden
+        ) return;
+
+        timer = setInterval(nextSlide, INTERVAL);
+    }
+
+    function stopSlider() {
+        clearInterval(timer);
+        timer = null;
+    }
+
+    /* ---------- インジケーター操作 ---------- */
+
+    dots.forEach((dot, index) => {
+
+        dot.addEventListener("click", () => {
+
+            stopSlider();
+            showSlide(index);
+            startSlider();
+
+        });
+
+    });
+
+    /* ---------- タブ非表示時は一時停止 ---------- */
+
+    document.addEventListener("visibilitychange", () => {
+
+        stopSlider();
+        startSlider();
+
+    });
+
+    /* ---------- 初期化 ---------- */
+
+    startSlider();
+
+})();
