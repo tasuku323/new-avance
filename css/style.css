@@ -954,3 +954,86 @@ footer {
 }
 
 }
+
+
+
+/* --------- 下層共通 --------- */
+
+.first-view__under {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+}
+
+.first-view__under .fv-content {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    color: var(--color-main2);
+}
+
+.first-view__under .maincopy {
+    font-size: 8vw;
+}
+
+
+
+/* --------- service --------- */
+
+.service-nav {
+    margin: 150px auto;
+    width: 100%;
+    max-width: 1440px;
+    padding: 16px;
+}
+
+.service-nav ul {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    height: fit-content;
+}
+
+.service-nav ul li a {
+    display: block;
+    border: 1px solid var(--color-main);
+    border-radius: 8px;
+    padding: 32px;
+    background-color: var(--color-main2);
+    color: #fff;
+}
+
+.service-nav ul li:nth-child(1) {
+    position: relative;
+}
+
+.service-nav ul li:nth-child(1)::before {
+    position: absolute;
+    content: "01";
+    font-size: 10vw;
+    font-weight: 900;
+    color: transparent;
+    /* autline作成－調べる－ */
+
+}
+
+
+
+
+
+
+
+
+/* --------- about --------- */
+
+/* --------- work --------- */
+
+/* --------- recruit --------- */
+
+/* --------- partner --------- */
+
+/* --------- company --------- */
+
+/* --------- news --------- */
